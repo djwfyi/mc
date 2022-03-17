@@ -60,11 +60,11 @@ var (
 		},
 		cli.BoolFlag{
 			Name:  "watch, w",
-			Usage: "watch and synchronize changes",
+			Usage: "watch target for add and delete operations and synchronize to target",
 		},
 		cli.BoolFlag{
 			Name:  "remove",
-			Usage: "remove extraneous object(s) on target",
+			Usage: "remove object(s) on target that do not exist on source",
 		},
 		cli.StringFlag{
 			Name:  "region",
@@ -164,11 +164,13 @@ EXAMPLES:
       files on Amazon S3 cloud storage.
       {{.Prompt}} {{.HelpName}} --remove play/photos/2014 s3/backup-photos/2014
 
-  07. Continuously mirror a local folder recursively to MinIO cloud storage. '--watch' continuously watches for
-      new objects, uploads and removes extraneous files on Amazon S3 cloud storage.
+  07. Continuously mirror a local folder recursively to MinIO cloud storage. '--remove' deletes extraneous files on Amazon S3 cloud storage. 
+      '--watch' continuously watches local folder for new or deleted objects and uploads changes on Amazon S3 cloud storage. 
       {{.Prompt}} {{.HelpName}} --remove --watch /var/lib/backups play/backups
 
   08. Continuously mirror all buckets and objects from site 1 to site 2, removed buckets and objects will be reflected as well.
+      '--remove' deletes extraneous files on site 2 not found on site 1. 
+      '--watch' continuously watches site 1 for new or deleted objects and mirrors those changes on site 2.
       {{.Prompt}} {{.HelpName}} --remove --watch site1-alias/ site2-alias/
 
   09. Mirror a bucket from aliased Amazon S3 cloud storage to a local folder.
